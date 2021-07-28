@@ -42,9 +42,20 @@ export const App = () => {
     TasksCollection.remove(_id)
   }
 
+  const pendingTaskCount = useTracker( () => {
+    // find uncompleted tasks 
+    return TasksCollection.find(hideCompletedFilter).count();
+  })
+  
+  const pendingTaskNumber = `${
+    pendingTaskCount ? `(${pendingTaskCount})` : '(0)'
+  }`;
+
   return (
     <div>
-      <h1>Meteor Tasks</h1>
+      <h1>Meteor Tasks {pendingTaskNumber} 
+        <span> </span>
+      </h1>
       <h3>POWERED BY METEOR X REACT</h3>
       {/* <Hello/> */}
 
