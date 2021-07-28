@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Hello } from './Hello.jsx';
 import { Task } from './Task.jsx';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -13,14 +13,20 @@ import { TaskForm } from './TaskForm';
 
 export const App = () => {
 
+  const [hideState, setHideState] = useState(false);
+
   // THIS WILL DOES NO WORK!!!, IF IT HAS BRACES
   // const tasks = useTracker( () => {
   //   TasksCollection.find({}).fetch()
   // });
 
+  // $ne = not equal
+  const hideCompletedFilter = { isChecked : { $ne: true} }
+
+  // fetch task with filter when only only need uncompleted task 
   const tasks = useTracker( () => 
     TasksCollection
-      .find({},  { sort: { createdAt: -1 } })
+      .find( hideState ? hideCompletedFilter : {}, { sort: { createdAt: -1 } })
       .fetch()
     );
 
@@ -43,6 +49,12 @@ export const App = () => {
       {/* <Hello/> */}
 
       <TaskForm />
+
+      <div className="filter-group">
+        <button onClick={ () => setHideState(!hideState) } className="button">
+          { hideState ?  'Show All' : 'Hide Completed' }
+        </button>
+      </div>
 
       <ul>
         { tasks.map( task => 
