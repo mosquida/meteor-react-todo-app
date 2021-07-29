@@ -61,7 +61,7 @@ input[type="text"] {
 form {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-bottom: 3rem;
 }
 
@@ -89,6 +89,26 @@ ul {
   color: #e91e63;
 }
 
+.w-4{
+  padding-left: 10px;
+  width: 30px;
+  color: #222;
+}
+
 label, input {
   display: inline-block;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+h2 {
+  font-weight: 300;
 }
