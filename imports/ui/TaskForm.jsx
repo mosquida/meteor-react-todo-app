@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TasksCollection } from '/imports/api/TasksCollection';
 
-export const TaskForm = () => {
+export const TaskForm = ({ user }) => {
 
     const [taskName, setTaskName] = useState('');
 
@@ -12,7 +12,8 @@ export const TaskForm = () => {
 
         TasksCollection.insert({
             name: taskName.trim(),
-            createdAt: new Date()
+            createdAt: new Date(),
+            userId: user._id
         });
 
         setTaskName('');

@@ -88,3 +88,7 @@ ul {
   width: 20px;
   color: #e91e63;
 }
+
+label, input {
+  display: inline-block;
+}
