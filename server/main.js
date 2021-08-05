@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { TasksCollection } from "/imports/api/TasksCollection";
+import { TasksCollection } from '/imports/db/TasksCollection';
 import { Accounts } from 'meteor/accounts-base';
+// register methods on server startup
+import '/imports/api/tasksMethods'; 
 
 const insertTask = (taskName, user) => 
     TasksCollection.insert({

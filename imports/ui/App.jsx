@@ -2,15 +2,15 @@ import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 import { Hello } from './Hello.jsx';
 import { Task } from './Task.jsx';
+import { TasksCollection } from '/imports/db/TasksCollection';
 import { useTracker } from 'meteor/react-meteor-data';
-import { TasksCollection } from '/imports/api/TasksCollection';
 import { TaskForm } from './TaskForm';
 import { LoginForm } from './LoginForm';
 
 // const tasks = [
 //   {_id: 1, text: 'Task 1'},
 //   {_id: 2, text: 'Task 2'},
-//   {_id: 3, text: 'Task 3'},
+//   {_id: 3, text: 'Task 3'}, 
 // ];
 
 export const App = () => {
@@ -48,15 +48,11 @@ export const App = () => {
   });
 
   const toggleCheckbox= ({ _id, isChecked }) => {
-    TasksCollection.update( _id, {
-      $set: {
-        isChecked: !isChecked
-      }
-    })
+    Meteor.call('task.setIsChecked', _id, !isChecked);
   }
 
   const deleteTask = ({ _id }) => {
-    TasksCollection.remove(_id);
+    Meteor.call('tasks.remove', _id);
   }
 
   const pendingTaskCount = useTracker( () => {
@@ -95,7 +91,7 @@ export const App = () => {
       { user ? (
          <>
           {/* We need _id (owner ref) when inserting new task */}
-          <TaskForm user={user}/>
+          <TaskForm />
 
           <div className="filter-group">
             <button onClick={ () => setHideState(!hideState) } className="button">
