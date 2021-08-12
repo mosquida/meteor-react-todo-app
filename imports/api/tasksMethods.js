@@ -12,7 +12,7 @@ Meteor.methods({
         check(text, String);
 
         if (!this.userId) throw new Meteor.Error('Unauthorized');
-        
+    
         TasksCollection.insert({
             name: text,
             createdAt: new Date,
@@ -25,6 +25,11 @@ Meteor.methods({
 
         if (!this.userId) throw new Meteor.Error('Unauthorized');
 
+        const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
+
+        // Chekcs if user owns the task for security  
+        if (!task) throw new Meteor.Error('Access denied.');
+
         TasksCollection.remove(taskId);
     },
 
@@ -34,6 +39,11 @@ Meteor.methods({
         check(isChecked, Boolean);
 
         if (!this.userId) throw new Meteor.Error('Unauthorized');
+
+        const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
+
+        // Chekcs if user owns the task for security  
+        if (!task) throw new Meteor.Error('Access denied.');
 
         TasksCollection.update(taskId, {
             $set: {
