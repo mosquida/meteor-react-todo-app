@@ -3,6 +3,9 @@ import { TasksCollection } from '/imports/db/TasksCollection';
 import { Accounts } from 'meteor/accounts-base';
 // register methods on server startup
 import '/imports/api/tasksMethods'; 
+// register publication
+import '/imports/api/tasksPublications';
+
 
 const insertTask = (taskName, user) => 
     TasksCollection.insert({
